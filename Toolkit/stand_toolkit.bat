@@ -77,21 +77,91 @@ cls
 color 1F
 echo.
 echo ******************************************
-echo *           Stand - Cleaner              *
-echo * 1. Clear Stand folder                  *
-echo * 2. Clear Calamity Folders              *
-echo * 3. Clear Both Folders                  *
-echo * 4. Activation Key Placer               *
-echo * 5. Update Stand Hotkeys                *
-echo * 6. Set GTA V Compatibility Mode        *
+echo *           Stand - Toolkit              *
+echo * 1. Clear Cache and Bin                 *
+echo * 2. Activation Key Placer               *
+echo * 3. Update Stand Hotkeys                *
+echo * 4. Set GTA V Compatibility Mode        *
+echo * 5. [Dangerous Section]                 *
 echo ******************************************
 echo.
 echo --------------------
-echo CLOSE THE LAUNCHPAD! AND UNLOAD STAND OR SHUTDOWN GTA 5
-echo BEFORE EXECUTING ANY OF THE OPTIONS
+echo Hey there! Please make sure to close the Stand launchpad and exit GTA 5
+echo before we proceed with any of the options. 
+echo I want to make sure everything goes smoothly for you! :)
 echo --------------------
 echo.
-echo Please choose your option (1, 2, 3, 4, 5, or 6):
+echo Just press 1, 2, 3, 4, or 5 to continue our journey! :)
+set /p useroption="> "
+
+if "%useroption%"=="1" GOTO ClearCacheBin
+if "%useroption%"=="2" GOTO KeyPlacer
+if "%useroption%"=="3" GOTO UpdateHotkeys
+if "%useroption%"=="4" GOTO SetGTACompatibility
+if "%useroption%"=="5" GOTO DangerousSection
+echo Oopsie! Looks like we took a wrong turn. Could you please choose an option again? Just a gentle reminder, it should be 1, 2, 3, 4, or 5. :)
+pause
+GOTO MainMenu
+
+
+:ClearCacheBin
+echo.
+echo.
+echo Let's make sure everything is in place for a smooth experience!
+echo Could you double-check that Stand's launchpad is closed and GTA V is taking a little break? (Close it.)
+echo Once you've done that, hit any key and we'll be on our way! :)
+echo.
+pause >nul
+cls
+echo Cross your fingers. I'm about to clear out the Stand Cache and Bin for a fresh start. Hang tight! :)
+echo.
+set "standBin=%appdata%\Stand\Bin"
+set "standCache=%appdata%\Stand\Cache"
+
+if exist "%standBin%" (
+    rmdir /s /q "%standBin%"
+    if errorlevel 1 (
+        echo Uh-oh! It looks like I couldn't sweep away the "%standBin%" this time. Could we give it another shot?
+        pause
+        GOTO END
+    ) else (
+        echo Hooray"%standBin%" has been successfully tidied up. (:
+    )
+) else (
+    echo It seems like "%standBin%" is already gone. Looks like we're one step ahead! (:
+)
+
+if exist "%standCache%" (
+    rmdir /s /q "%standCache%"
+    if errorlevel 1 (
+        echo Trying to clear "%standCache%" didn't quite work out.
+        pause
+        GOTO END
+    ) else (
+        echo Great news. "%standCache%" is now cleared out. We're on the right track!
+    )
+) else (
+    echo Looks like "%standCache%" is already out of the picture. Everything is tidy on this end!
+)
+
+echo.
+echo All clear. The Cache and Bin have been swept clean! Let's keep moving forward. :)
+echo.
+pause
+GOTO END
+
+
+
+:DangerousSection
+cls
+echo ******************************************
+echo *         Dangerous Operations           *
+echo * 1. Clear Stand folder                  *
+echo * 2. Clear Calamity Folders              *
+echo * 3. Clear Both Folders                  *
+echo ******************************************
+echo.
+echo Please choose your option (1, 2, or 3):
 set /p useroption="> "
 
 if "%useroption%"=="1" (
@@ -112,16 +182,10 @@ if "%useroption%"=="1" (
     set "CalamityfolderPath2=C:\ProgramData\Calamity, Inc"
     set "CalamitynewFolderName2=Calamity, Inc_old"
     GOTO SubMenu
-) else if "%useroption%"=="4" (
-    GOTO KeyPlacer
-) else if "%useroption%"=="5" (
-    GOTO UpdateHotkeys
-) else if "%useroption%"=="6" (
-    GOTO SetGTACompatibility
 ) else (
     echo Invalid option selected. Please try again.
     pause
-    GOTO MainMenu
+    GOTO DangerousSection
 )
 
 :SubMenu
